@@ -52,6 +52,54 @@ public class Matrix4x4 {
         return product;
     } // multiply(Matrix4x4)
     
+    public void rotationX(double angle) {
+        this.identity();
+        this.set(1, 1, Math.cos(angle));
+        this.set(1, 2, -Math.sin(angle));
+        this.set(2, 1, Math.sin(angle));
+        this.set(2, 2, Math.cos(angle));
+    } // rotationX(double)
+    
+    public void rotationY(double angle) {
+        this.identity();
+        this.set(0, 0, Math.cos(angle));
+        this.set(0, 2, Math.sin(angle));
+        this.set(2, 0, -Math.sin(angle));
+        this.set(2, 2, Math.cos(angle));
+    } // rotationY(double)
+    
+    public void rotationZ(double angle) {
+        this.identity();
+        this.set(0, 0, Math.cos(angle));
+        this.set(0, 1, -Math.sin(angle));
+        this.set(1, 0, Math.sin(angle));
+        this.set(1, 1, Math.cos(angle));
+    } // rotationZ(double)
+    
+    public void scale(double scaleX, double scaleY, double scaleZ) {
+        this.identity();
+        this.set(0, 0, scaleX);
+        this.set(1, 1, scaleY);
+        this.set(2, 2, scaleZ);
+    } // scale(double, double, double)
+    
+    public void translate(double changeX, double changeY, double changeZ) {
+        this.identity();
+        this.set(0, 3, changeX);
+        this.set(1, 3, changeY);
+        this.set(2, 3, changeZ);
+    } // translate(double, double, double)
+    
+    public Matrix4x4 addMatrix(Matrix4x4 m) {
+        Matrix4x4 sum = new Matrix4x4();
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                sum.set(row, column, this.get(row, column) + m.get(row, column));
+            } // for
+        } // for
+        return sum;
+    } // addMatrix(Matrix4x4)
+    
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -78,14 +126,4 @@ public class Matrix4x4 {
         result.append(")");
         return result.toString();
     } // rowToString(int)
-    
-    public static void main(String[] args) {
-        Matrix4x4 a = new Matrix4x4();
-        Matrix4x4 b = new Matrix4x4();
-        Matrix4x4 c = a.multiply(b);
-        
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
-        System.out.println("a * b: " + c);
-    } // main(String[])
 } // Matrix4x4
