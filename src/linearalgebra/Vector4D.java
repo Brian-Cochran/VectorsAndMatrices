@@ -18,6 +18,13 @@ public class Vector4D {
         } // for
     } // Vector4D()
     
+    public Vector4D(double x, double y, double z, double q) {
+        this.set(0, x);
+        this.set(1, y);
+        this.set(2, z);
+        this.set(3, q);
+    } // Vector4D()
+    
     public double get(int row) {
         return this.elements[row][0];
     } // get(int)
@@ -26,28 +33,27 @@ public class Vector4D {
         this.elements[row][0] = value;
     } // set(int, double)
     
-    public Vector4D dotProduct(Vector4D v) {
+    public double dotProduct(Vector4D v) {
+        double product = 0.0;
         for (int i = 0; i < 4; i++) {
-            this.set(i, this.get(i) +  v.get(i));
+            product += this.get(i) * v.get(i);
+        } // for
+        return product;
+    } // dotProduct(Vector4D)
+    
+    public Vector4D matrixVectorMultiplication(Matrix4x4 m) {
+        double value = 0.0;
+        for (int row = 0; row < 4; row++) {
+            for (int column = 0; column < 4; column++) {
+                value+= this.get(column) * m.get(row, column);
+            } // for
+            this.set(row, value);
         } // for
         return this;
-    } // dotProduct(Vector4D)
+    } // matrixVectorMultiplication(Vector4D, Matrix4x4)
     
     @Override
     public String toString() {
         return "(" + get(0) + ", " + get(1) + ", " + get(2) + ", " + get(3) + ")";
     } // toString()
-    
-    public static void main(String[] args) {
-        Vector4D a = new Vector4D();
-        a.set(3, 1);
-        Vector4D b = new Vector4D();
-        b.set(3, 1);
-        
-        
-        
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
-        System.out.println("a * b: " + a.dotProduct(b));
-    } // main(String[])
 }
